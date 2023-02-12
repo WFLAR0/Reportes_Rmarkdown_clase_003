@@ -6,16 +6,16 @@ output:
   html_document: 
    toc: yes
    toc_float:
-      collapse: yes
+    collapse: yes
    number_sections: yes    
-   Code_folding: hide
+   code_folding: hide
    code_download: yes
    theme: yeti
 ---
 
 ```{r setup, include=FALSE}
 #setup es el nmbre del codigo
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning= FALSE, message = FALSE)
 ```
 
 # introduccion
@@ -30,9 +30,10 @@ El objetivo de este tipo de modeloses el estimar la probabilidad de evento de in
 $$P[Y=1 | X=x]$$
 Usaremos la funcion logit para estas cuentas:
 $$P[Y=1 | X=x]=\frac{exp(\beta^{T}x)}{1+exp(\beta^{T}x)}$$
+
 # Ejemplo en R
 
-```{r CargaLibrerias, eval=TRUE, echo=FALSE}
+```{r CargaLibrerias, eval=TRUE, message=FALSE}
 #include=FALSE es para ocultar el codigo
 #echo=FALSE 
 #para ver el codigo
@@ -46,6 +47,28 @@ library(PerformanceAnalytics)
 library(cowplot)
 ```
 
+
+```{r CargarDatos, include=TRUE, message=FALSE}
+titanic <- read.csv("https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv")
+colnames(titanic)
+```
+
+## Algunos graficos
+Consideremos:
+
+* La variable dependiente Survived
+* La variable Pclass
+* La variable Age
+
+```{r PrimerGraficos, message=FALSE}
+titanic$Survived<- as.factor(titanic$Survived)
+titanic$Pclass<- as.factor(titanic$Pclass)
+ggplot2::ggplot(data= titanic, 
+                mapping=aes(Survived, fill=Survived))+ 
+  geom_bar(position="dodge")+ 
+  scale_fill_manual(values= c("red","blue"))
+
+```
 
 
 
